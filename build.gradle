@@ -42,10 +42,11 @@ subprojects {
         exec {
             commandLine 'git', 'describe', '--tags'
             standardOutput = tagInfo
+            ignoreExitValue = true
         }
-        tagInfo = tagInfo.toString()
+        tagInfo = tagInfo.toString().trim()
 
-        if (!tagInfo.contains('-')) {
+        if (tagInfo.isEmpty() || !tagInfo.contains('-')) {
             return 0
         }
         return tagInfo.split("-")[1]
